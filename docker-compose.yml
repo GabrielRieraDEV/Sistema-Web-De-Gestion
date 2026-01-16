@@ -47,9 +47,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      target: build
     container_name: cecoalimentos_frontend
+    volumes:
+      - ./frontend:/app
     ports:
-      - "80:80"
+      - "5173:5173"
+    command: sh -c "rm -rf node_modules package-lock.json && npm install && npm run dev"
     networks:
       - cecoalimentos_network
 

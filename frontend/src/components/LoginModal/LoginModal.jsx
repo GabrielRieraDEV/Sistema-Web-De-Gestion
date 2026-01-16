@@ -119,7 +119,7 @@ function LoginModal({ isOpen, onClose }) {
                                 id="email"
                                 name="email"
                                 className="form-input"
-                                placeholder="tu@email.com"
+                                placeholder="yo@email.com"
                                 value={formData.email}
                                 onChange={handleChange}
                                 disabled={loading}

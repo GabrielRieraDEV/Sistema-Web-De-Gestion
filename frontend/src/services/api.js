@@ -4,7 +4,7 @@
  */
 
 // URL base del backend - configurar en variables de entorno
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 /**
  * Cliente HTTP base con configuración de autenticación
