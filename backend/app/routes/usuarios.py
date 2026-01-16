@@ -226,3 +226,30 @@ def activate_usuario(id):
         'message': 'Usuario activado exitosamente',
         'usuario': usuario.to_dict()
     }), 200
+
+
+@usuarios_bp.route('/<int:id>/eliminar', methods=['DELETE'])
+@jwt_required()
+@admin_required
+@swag_from({
+    'tags': ['Usuarios'],
+    'summary': 'Eliminar usuario permanentemente',
+    'description': 'Elimina físicamente un usuario de la base de datos',
+    'security': [{'Bearer': []}],
+    'parameters': [{'name': 'id', 'in': 'path', 'type': 'integer', 'required': True}],
+    'responses': {200: {'description': 'Usuario eliminado'}, 400: {'description': 'Error'}}
+})
+def eliminar_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+    current_user_id = int(get_jwt_identity())
+    
+    if usuario.id == current_user_id:
+        return jsonify({'error': 'No puede eliminar su propio usuario'}), 400
+    
+    try:
+        db.session.delete(usuario)
+        db.session.commit()
+        return jsonify({'message': 'Usuario eliminado permanentemente'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'No se puede eliminar. Tiene registros asociados.'}), 400
