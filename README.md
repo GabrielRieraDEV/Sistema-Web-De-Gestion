@@ -43,12 +43,22 @@ docker-compose exec backend flask db upgrade
 docker-compose exec backend python seed.py
 ```
 
-### 5. Acceder a la API
+### 5. Acceder al Sistema
+- **🌐 Frontend Web**: http://localhost
 - **API Backend**: http://localhost:5000
 - **📖 Documentación Swagger**: http://localhost:5000/docs
 - **Health Check**: http://localhost:5000/api/health
 
 > La documentación Swagger permite probar todos los endpoints directamente desde el navegador
+
+### Usuarios de Prueba
+| Usuario | Contraseña | Rol |
+|---------|------------|-----|
+| admin | admin123 | Administrador |
+| logistica | log123 | Logística |
+| cobranza | cob123 | Cobranza |
+| publicidad | pub123 | Publicidad |
+| cliente1 | cli123 | Cliente |
 
 ## 📚 Endpoints de la API
 

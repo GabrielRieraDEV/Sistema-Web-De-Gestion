@@ -43,6 +43,18 @@ services:
     networks:
       - cecoalimentos_network
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cecoalimentos_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cecoalimentos_network
+
 volumes:
   postgres_data:
 
