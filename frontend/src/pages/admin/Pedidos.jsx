@@ -15,6 +15,10 @@ const Pedidos = () => {
   const [selectedProduct, setSelectedProduct] = useState({ producto_id: '', cantidad: 1 })
   const [message, setMessage] = useState({ type: '', text: '' })
 
+  const productosFiltrados = formData.proveedor_id
+    ? productos.filter(p => p.proveedor_id === parseInt(formData.proveedor_id))
+    : []
+
   useEffect(() => { fetchData() }, [])
 
   const fetchData = async () => {
@@ -71,12 +75,18 @@ const Pedidos = () => {
     if (!selectedProduct.producto_id) return
     const prod = productos.find(p => p.id === parseInt(selectedProduct.producto_id))
     if (!prod) return
+
+    if (formData.proveedor_id && prod.proveedor_id !== parseInt(formData.proveedor_id)) {
+      setMessage({ type: 'error', text: 'El producto seleccionado no pertenece al proveedor del pedido' })
+      return
+    }
     
     setFormData({
       ...formData,
       detalles: [...formData.detalles, {
         producto_id: parseInt(selectedProduct.producto_id),
         producto_nombre: prod.nombre,
+        proveedor_nombre: prod.proveedor_nombre,
         cantidad: parseInt(selectedProduct.cantidad),
         precio_unitario: prod.precio_compra
       }]
@@ -109,8 +119,8 @@ const Pedidos = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Pedidos a Proveedores</h1>
-          <p className="text-gray-500">Gestión de órdenes de compra</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Pedidos a Proveedores</h1>
+          <p className="text-gray-500 dark:text-gray-400">Gestión de órdenes de compra</p>
         </div>
         <button onClick={() => { resetForm(); setShowModal(true) }} className="btn-primary flex items-center space-x-2">
           <Plus size={20} /><span>Nuevo Pedido</span>
@@ -118,7 +128,7 @@ const Pedidos = () => {
       </div>
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
           {message.text}
         </div>
       )}
@@ -139,10 +149,10 @@ const Pedidos = () => {
               </thead>
               <tbody>
                 {pedidos.map((pedido) => (
-                  <tr key={pedido.id} className="border-b hover:bg-gray-50">
+                  <tr key={pedido.id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <td className="py-3 px-4 font-medium">#{pedido.id}</td>
                     <td className="py-3 px-4">{pedido.proveedor_nombre}</td>
-                    <td className="py-3 px-4 text-gray-600">
+                    <td className="py-3 px-4 text-gray-600 dark:text-gray-300">
                       {new Date(pedido.fecha_pedido).toLocaleDateString('es-VE')}
                     </td>
                     <td className="py-3 px-4 text-right font-medium">${parseFloat(pedido.total || 0).toFixed(2)}</td>
@@ -176,17 +186,28 @@ const Pedidos = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-900 rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">Nuevo Pedido</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Nuevo Pedido</h2>
               <button onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Proveedor *</label>
-                <select value={formData.proveedor_id} onChange={(e) => setFormData({...formData, proveedor_id: e.target.value})} className="input" required>
+                <select
+                  value={formData.proveedor_id}
+                  onChange={(e) => {
+                    setFormData({ ...formData, proveedor_id: e.target.value, detalles: [] })
+                    setSelectedProduct({ producto_id: '', cantidad: 1 })
+                  }}
+                  className="input"
+                  required
+                >
                   <option value="">Seleccionar...</option>
                   {proveedores.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
                 </select>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Solo se mostrarán productos del proveedor seleccionado.
+                </p>
               </div>
 
               <div>
@@ -197,9 +218,16 @@ const Pedidos = () => {
               <div className="border-t pt-4">
                 <label className="block text-sm font-medium mb-2">Productos</label>
                 <div className="flex gap-2 mb-3">
-                  <select value={selectedProduct.producto_id} onChange={(e) => setSelectedProduct({...selectedProduct, producto_id: e.target.value})} className="input flex-1">
-                    <option value="">Seleccionar producto...</option>
-                    {productos.map((p) => <option key={p.id} value={p.id}>{p.nombre} - ${p.precio_compra}</option>)}
+                  <select
+                    value={selectedProduct.producto_id}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, producto_id: e.target.value })}
+                    className="input flex-1"
+                    disabled={!formData.proveedor_id}
+                  >
+                    <option value="">{formData.proveedor_id ? 'Seleccionar producto...' : 'Seleccione un proveedor primero'}</option>
+                    {productosFiltrados.map((p) => (
+                      <option key={p.id} value={p.id}>{p.nombre} - ${p.precio_compra}</option>
+                    ))}
                   </select>
                   <input type="number" min="1" value={selectedProduct.cantidad} onChange={(e) => setSelectedProduct({...selectedProduct, cantidad: e.target.value})} className="input w-24" />
                   <button type="button" onClick={addProduct} className="btn-secondary">Agregar</button>
@@ -208,10 +236,15 @@ const Pedidos = () => {
                 {formData.detalles.length > 0 && (
                   <div className="space-y-2">
                     {formData.detalles.map((d, i) => (
-                      <div key={i} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                        <span>{d.producto_nombre} x{d.cantidad}</span>
+                      <div key={i} className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-2 rounded">
+                        <div>
+                          <span>{d.producto_nombre} x{d.cantidad}</span>
+                          {d.proveedor_nombre && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Proveedor: {d.proveedor_nombre}</p>
+                          )}
+                        </div>
                         <div className="flex items-center space-x-2">
-                          <span className="text-gray-500">${(d.cantidad * d.precio_unitario).toFixed(2)}</span>
+                          <span className="text-gray-500 dark:text-gray-400">${(d.cantidad * d.precio_unitario).toFixed(2)}</span>
                           <button type="button" onClick={() => removeProduct(i)} className="text-red-500"><X size={16} /></button>
                         </div>
                       </div>
@@ -237,16 +270,16 @@ const Pedidos = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-900 rounded-xl max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">Pedido #{showDetail.id}</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Pedido #{showDetail.id}</h2>
               <button onClick={() => setShowDetail(null)}><X size={24} /></button>
             </div>
             
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div><span className="text-gray-500">Proveedor:</span><p className="font-medium">{showDetail.proveedor_nombre}</p></div>
-                <div><span className="text-gray-500">Estado:</span><p><span className={`badge ${getStatusBadge(showDetail.estado)}`}>{showDetail.estado}</span></p></div>
-                <div><span className="text-gray-500">Fecha:</span><p>{new Date(showDetail.fecha_pedido).toLocaleDateString('es-VE')}</p></div>
-                <div><span className="text-gray-500">Total:</span><p className="font-bold">${parseFloat(showDetail.total || 0).toFixed(2)}</p></div>
+                <div><span className="text-gray-500 dark:text-gray-400">Proveedor:</span><p className="font-medium">{showDetail.proveedor_nombre}</p></div>
+                <div><span className="text-gray-500 dark:text-gray-400">Estado:</span><p><span className={`badge ${getStatusBadge(showDetail.estado)}`}>{showDetail.estado}</span></p></div>
+                <div><span className="text-gray-500 dark:text-gray-400">Fecha:</span><p>{new Date(showDetail.fecha_pedido).toLocaleDateString('es-VE')}</p></div>
+                <div><span className="text-gray-500 dark:text-gray-400">Total:</span><p className="font-bold">${parseFloat(showDetail.total || 0).toFixed(2)}</p></div>
               </div>
 
               {showDetail.detalles && (
@@ -254,7 +287,7 @@ const Pedidos = () => {
                   <p className="font-medium mb-2">Productos:</p>
                   <div className="space-y-2">
                     {showDetail.detalles.map((d, i) => (
-                      <div key={i} className="flex justify-between bg-gray-50 p-2 rounded text-sm">
+                      <div key={i} className="flex justify-between bg-gray-50 dark:bg-gray-800 p-2 rounded text-sm">
                         <span>{d.producto_nombre} x{d.cantidad}</span>
                         <span>${parseFloat(d.subtotal).toFixed(2)}</span>
                       </div>

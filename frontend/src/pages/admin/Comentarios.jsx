@@ -53,7 +53,7 @@ const Comentarios = () => {
       <Star
         key={i}
         size={14}
-        className={i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}
+        className={i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}
       />
     ))
   }
@@ -112,7 +112,7 @@ const Comentarios = () => {
         {loading ? <div className="text-center py-8">Cargando...</div> : comentarios.length === 0 ? (
           <div className="text-center py-12">
             <MessageSquare size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No hay comentarios</p>
+            <p className="text-gray-500 dark:text-gray-400">No hay comentarios</p>
           </div>
         ) : (
           <div className="space-y-4">

@@ -226,7 +226,7 @@ const Home = () => {
             </div>
             <span className="text-white font-bold">CECOALIMENTOS</span>
           </div>
-          <p className="text-sm">© 2024 CECOALIMENTOS. Todos los derechos reservados.</p>
+          <p className="text-sm">© 2026 CECOALIMENTOS. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

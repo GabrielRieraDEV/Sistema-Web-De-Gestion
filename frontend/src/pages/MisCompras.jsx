@@ -89,12 +89,12 @@ const MisCompras = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Mis Compras</h1>
-        <p className="text-gray-500">Historial y estado de tus compras</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Mis Compras</h1>
+        <p className="text-gray-500 dark:text-gray-400">Historial y estado de tus compras</p>
       </div>
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
           {message.text}
         </div>
       )}
@@ -102,7 +102,7 @@ const MisCompras = () => {
       {compras.length === 0 ? (
         <div className="card text-center py-12">
           <Package size={48} className="mx-auto text-gray-300 mb-4" />
-          <p className="text-gray-500">No tienes compras aún</p>
+          <p className="text-gray-500 dark:text-gray-400">No tienes compras aún</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -112,8 +112,8 @@ const MisCompras = () => {
                 <div className="flex items-start space-x-4">
                   {getStatusIcon(compra.estado)}
                   <div>
-                    <h3 className="font-semibold text-gray-900">Compra #{compra.id}</h3>
-                    <p className="text-sm text-gray-500">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Compra #{compra.id}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {new Date(compra.fecha_compra).toLocaleDateString('es-VE', {
                         day: '2-digit',
                         month: 'long',
@@ -125,7 +125,7 @@ const MisCompras = () => {
                 
                 <div className="flex items-center space-x-4">
                   <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900">${compra.monto_total}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">${compra.monto_total}</p>
                     <span className={`badge ${getStatusBadge(compra.estado)}`}>
                       {compra.estado.replace('_', ' ')}
                     </span>
@@ -144,9 +144,9 @@ const MisCompras = () => {
               </div>
 
               {compra.retiro && (
-                <div className="mt-4 p-4 bg-green-50 rounded-lg">
-                  <p className="font-medium text-green-800">Información de Retiro</p>
-                  <div className="text-sm text-green-700 mt-2 space-y-1">
+                <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/30 rounded-lg">
+                  <p className="font-medium text-green-800 dark:text-green-300">Información de Retiro</p>
+                  <div className="text-sm text-green-700 dark:text-green-200 mt-2 space-y-1">
                     <p>N° Retiro: <strong>{compra.retiro.numero_retiro}</strong></p>
                     <p>N° Cola: <strong>{compra.retiro.numero_cola}</strong></p>
                     <p>Fecha: {new Date(compra.retiro.fecha_retiro_programada).toLocaleDateString('es-VE')}</p>
@@ -162,12 +162,12 @@ const MisCompras = () => {
       {showPaymentModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-900 rounded-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Registrar Pago</h2>
-            <p className="text-gray-600 mb-4">Compra #{selectedCompra?.id} - ${selectedCompra?.monto_total}</p>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Registrar Pago</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">Compra #{selectedCompra?.id} - ${selectedCompra?.monto_total}</p>
             
             <form onSubmit={handlePayment} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Método de Pago
                 </label>
                 <select
@@ -181,7 +181,7 @@ const MisCompras = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   N° Referencia *
                 </label>
                 <input
@@ -194,7 +194,7 @@ const MisCompras = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Banco Origen
                 </label>
                 <input
@@ -206,7 +206,7 @@ const MisCompras = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Teléfono de Pago
                 </label>
                 <input
@@ -218,7 +218,7 @@ const MisCompras = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Monto *
                 </label>
                 <input
