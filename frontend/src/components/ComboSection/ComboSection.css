@@ -1,0 +1,107 @@
+.combos-section {
+    padding: var(--spacing-20) 0;
+    background: white;
+}
+
+.combos-header {
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+}
+
+.combos-subtitle {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-600);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-4);
+}
+
+.combos-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-900);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .combos-title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.combos-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-500);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.combos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .combos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .combos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Estado de error */
+.combos-error {
+    text-align: center;
+    padding: var(--spacing-12);
+    background: var(--color-error);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+    border-radius: var(--border-radius-xl);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.combos-error-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-4);
+}
+
+.combos-error-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-error);
+    margin-bottom: var(--spacing-2);
+}
+
+.combos-error-message {
+    color: var(--color-neutral-600);
+    margin-bottom: var(--spacing-4);
+}
+
+/* Estado vacío */
+.combos-empty {
+    text-align: center;
+    padding: var(--spacing-12);
+}
+
+.combos-empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+}
+
+.combos-empty-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-700);
+    margin-bottom: var(--spacing-2);
+}
+
+.combos-empty-message {
+    color: var(--color-neutral-500);
+}

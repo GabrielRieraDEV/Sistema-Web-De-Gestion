@@ -1,0 +1,140 @@
+/**
+ * Estilos del Componente App
+ * COOPERATIVA CECOALIMENTOS
+ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ========================================
+   SECCIÓN NOSOTROS
+   ======================================== */
+.about-section {
+  padding: var(--spacing-20) 0;
+  background: linear-gradient(180deg, white 0%, var(--color-neutral-50) 100%);
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-12);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .about-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-text {
+  order: 2;
+}
+
+@media (min-width: 1024px) {
+  .about-text {
+    order: 1;
+  }
+}
+
+.about-subtitle {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-4);
+}
+
+.about-title {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-900);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+  .about-title {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.about-description {
+  font-size: var(--font-size-lg);
+  color: var(--color-neutral-600);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-8);
+}
+
+.about-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.about-feature {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.about-feature-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-50));
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-xl);
+}
+
+.about-feature h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-800);
+  margin-bottom: var(--spacing-1);
+}
+
+.about-feature p {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+}
+
+.about-image {
+  order: 1;
+}
+
+@media (min-width: 1024px) {
+  .about-image {
+    order: 2;
+  }
+}
+
+.about-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  height: 400px;
+  background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+  border-radius: var(--border-radius-2xl);
+  font-size: 4rem;
+}
+
+@media (min-width: 768px) {
+  .about-image-placeholder {
+    height: 500px;
+    font-size: 5rem;
+  }
+}

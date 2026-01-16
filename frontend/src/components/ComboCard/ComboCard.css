@@ -1,0 +1,150 @@
+.combo-card {
+    position: relative;
+    background: white;
+    border-radius: var(--border-radius-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+}
+
+.combo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.combo-card-image {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.combo-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.combo-card:hover .combo-card-image img {
+    transform: scale(1.05);
+}
+
+.combo-card-image-placeholder {
+    font-size: 4rem;
+}
+
+.combo-card-badge {
+    position: absolute;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    padding: var(--spacing-1) var(--spacing-3);
+    background: var(--color-primary-500);
+    color: white;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--border-radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.combo-card-content {
+    padding: var(--spacing-6);
+}
+
+.combo-card-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.combo-card-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.combo-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--color-neutral-100);
+}
+
+.combo-card-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.combo-card-price-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-500);
+}
+
+.combo-card-price-value {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+}
+
+.combo-card-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-5);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+    color: white;
+    font-weight: var(--font-weight-semibold);
+    border: none;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.combo-card-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* Skeleton Loading */
+.combo-card-skeleton .combo-card-image {
+    background: var(--color-neutral-200);
+}
+
+.combo-card-skeleton .skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin-bottom: var(--spacing-3);
+}
+
+.combo-card-skeleton .skeleton-text {
+    height: 14px;
+    margin-bottom: var(--spacing-2);
+}
+
+.combo-card-skeleton .skeleton-text:last-child {
+    width: 80%;
+}
+
+.combo-card-skeleton .skeleton-price {
+    height: 32px;
+    width: 80px;
+}
+
+.combo-card-skeleton .skeleton-btn {
+    height: 44px;
+    width: 120px;
+    border-radius: var(--border-radius-lg);
+}
