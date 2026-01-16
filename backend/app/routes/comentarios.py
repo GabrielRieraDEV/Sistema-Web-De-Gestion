@@ -97,7 +97,7 @@ def get_todos_comentarios():
     'responses': {201: {'description': 'Comentario enviado'}}
 })
 def crear_comentario():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
     
     if 'contenido' not in data:
@@ -166,7 +166,7 @@ def moderar_comentario(id):
     'responses': {200: {'description': 'Lista de comentarios del usuario'}}
 })
 def get_mis_comentarios():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     
     comentarios = Comentario.query.filter_by(usuario_id=current_user_id).order_by(
         Comentario.fecha_creacion.desc()

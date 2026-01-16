@@ -28,7 +28,7 @@ pagos_bp = Blueprint('pagos', __name__)
     'responses': {201: {'description': 'Compra iniciada con instrucciones de pago'}}
 })
 def realizar_compra():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
     
     if 'combo_id' not in data:
@@ -92,7 +92,7 @@ def realizar_compra():
     'responses': {201: {'description': 'Pago registrado, pendiente verificación'}}
 })
 def registrar_pago():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
     
     required_fields = ['compra_id', 'metodo_pago', 'numero_referencia', 'monto']
@@ -182,7 +182,7 @@ def get_pagos_pendientes():
     'responses': {200: {'description': 'Pago procesado, retiro creado si aprobado'}}
 })
 def verificar_pago(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
     
     pago = Pago.query.get_or_404(id)
@@ -267,7 +267,7 @@ def verificar_pago(id):
     'responses': {200: {'description': 'Lista de compras del usuario'}}
 })
 def get_mis_compras():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     
     compras = Compra.query.filter_by(usuario_id=current_user_id).order_by(
         Compra.fecha_compra.desc()

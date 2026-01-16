@@ -196,7 +196,7 @@ def update_usuario(id):
 })
 def delete_usuario(id):
     usuario = Usuario.query.get_or_404(id)
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     
     if usuario.id == current_user_id:
         return jsonify({'error': 'No puede eliminar su propio usuario'}), 400

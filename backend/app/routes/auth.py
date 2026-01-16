@@ -118,8 +118,8 @@ def login():
     if not usuario.activo:
         return jsonify({'error': 'Usuario inactivo'}), 401
     
-    access_token = create_access_token(identity=usuario.id)
-    refresh_token = create_refresh_token(identity=usuario.id)
+    access_token = create_access_token(identity=str(usuario.id))
+    refresh_token = create_refresh_token(identity=str(usuario.id))
     
     return jsonify({
         'access_token': access_token,
@@ -160,7 +160,7 @@ def refresh():
 })
 def get_current_user():
     current_user_id = get_jwt_identity()
-    usuario = Usuario.query.get(current_user_id)
+    usuario = Usuario.query.get(int(current_user_id))
     
     if not usuario:
         return jsonify({'error': 'Usuario no encontrado'}), 404
@@ -195,7 +195,7 @@ def get_current_user():
 })
 def change_password():
     current_user_id = get_jwt_identity()
-    usuario = Usuario.query.get(current_user_id)
+    usuario = Usuario.query.get(int(current_user_id))
     data = request.get_json()
     
     if not usuario.check_password(data.get('current_password', '')):
