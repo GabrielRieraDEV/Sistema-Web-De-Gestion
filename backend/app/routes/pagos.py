@@ -6,7 +6,8 @@ from app import db
 from app.models.compra import Compra
 from app.models.pago import Pago
 from app.models.retiro import Retiro, generar_numero_retiro
-from app.models.combo import Combo
+from app.models.combo import Combo, ComboProducto
+from app.models.inventario import Inventario
 from app.models.usuario import Usuario
 from app.utils.decorators import cobranza_required
 from app.services.email_service import enviar_notificacion_pago
@@ -201,6 +202,15 @@ def verificar_pago(id):
     if accion == 'aprobar':
         pago.estado = 'verificado'
         pago.compra.estado = 'pagado'
+        
+        combo = pago.compra.combo
+        for combo_producto in combo.productos:
+            inventario = Inventario.query.filter_by(producto_id=combo_producto.producto_id).first()
+            if inventario:
+                inventario.cantidad -= combo_producto.cantidad
+                if inventario.cantidad < 0:
+                    inventario.cantidad = 0
+                inventario.ultima_salida = datetime.utcnow()
         
         usuario = pago.compra.usuario
         fecha_retiro = datetime.utcnow() + timedelta(days=1)

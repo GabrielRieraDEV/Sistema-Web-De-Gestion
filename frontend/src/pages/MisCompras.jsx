@@ -161,7 +161,7 @@ const MisCompras = () => {
       {/* Payment Modal */}
       {showPaymentModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+          <div className="bg-white dark:bg-gray-900 rounded-xl max-w-md w-full p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Registrar Pago</h2>
             <p className="text-gray-600 mb-4">Compra #{selectedCompra?.id} - ${selectedCompra?.monto_total}</p>
             

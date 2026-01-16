@@ -3,10 +3,12 @@ import { useAuth } from './context/AuthContext'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Combos from './pages/Combos'
 import ComboDetail from './pages/ComboDetail'
 import MisCompras from './pages/MisCompras'
+import ComentariosCliente from './pages/ComentariosCliente'
 import Usuarios from './pages/admin/Usuarios'
 import Proveedores from './pages/admin/Proveedores'
 import Productos from './pages/admin/Productos'
@@ -39,15 +41,17 @@ function App() {
 
   return (
     <Routes>
+      {/* Página pública - HU-05 */}
+      <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Home />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
       <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
       
-      <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
-        <Route index element={<Navigate to="/dashboard" />} />
+      <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="combos" element={<Combos />} />
         <Route path="combos/:id" element={<ComboDetail />} />
         <Route path="mis-compras" element={<MisCompras />} />
+        <Route path="comentarios" element={<ComentariosCliente />} />
         
         <Route path="admin/usuarios" element={
           <PrivateRoute roles={['admin']}><Usuarios /></PrivateRoute>

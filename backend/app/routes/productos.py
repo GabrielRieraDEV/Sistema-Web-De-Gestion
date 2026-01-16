@@ -29,8 +29,15 @@ def get_productos():
     per_page = request.args.get('per_page', 10, type=int)
     categoria = request.args.get('categoria')
     proveedor_id = request.args.get('proveedor_id', type=int)
+    activo = request.args.get('activo')
     
-    query = Producto.query.filter_by(activo=True)
+    if activo is None:
+        query = Producto.query.filter_by(activo=True)
+    elif str(activo).lower() == 'all':
+        query = Producto.query
+    else:
+        activo_bool = str(activo).lower() == 'true'
+        query = Producto.query.filter_by(activo=activo_bool)
     
     if categoria:
         query = query.filter_by(categoria=categoria)
@@ -183,6 +190,30 @@ def delete_producto(id):
     db.session.commit()
     
     return jsonify({'message': 'Producto desactivado exitosamente'}), 200
+
+
+@productos_bp.route('/<int:id>/eliminar', methods=['DELETE'])
+@jwt_required()
+@admin_required
+@swag_from({
+    'tags': ['Productos'],
+    'summary': 'Eliminar producto permanentemente',
+    'security': [{'Bearer': []}],
+    'parameters': [{'name': 'id', 'in': 'path', 'type': 'integer', 'required': True}],
+    'responses': {200: {'description': 'Producto eliminado'}, 400: {'description': 'Error'}}
+})
+def eliminar_producto(id):
+    producto = Producto.query.get_or_404(id)
+    try:
+        inventario = Inventario.query.filter_by(producto_id=producto.id).first()
+        if inventario:
+            db.session.delete(inventario)
+        db.session.delete(producto)
+        db.session.commit()
+        return jsonify({'message': 'Producto eliminado permanentemente'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'No se puede eliminar. Tiene registros asociados.'}), 400
 
 
 @productos_bp.route('/categorias', methods=['GET'])

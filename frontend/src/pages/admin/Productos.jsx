@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import api from '../../services/api'
-import { Package, Plus, Edit, Trash2, X } from 'lucide-react'
+import { Package, Plus, Edit, Power, Trash2, X } from 'lucide-react'
 
 const Productos = () => {
   const [productos, setProductos] = useState([])
@@ -10,6 +10,7 @@ const Productos = () => {
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState(null)
   const [filters, setFilters] = useState({ categoria: '', proveedor_id: '' })
+  const [showInactivos, setShowInactivos] = useState(true)
   const [formData, setFormData] = useState({
     nombre: '', descripcion: '', precio_compra: '', precio_venta: '',
     unidad_medida: 'kg', categoria: '', proveedor_id: '', stock_inicial: 0
@@ -18,13 +19,14 @@ const Productos = () => {
 
   useEffect(() => {
     fetchData()
-  }, [filters])
+  }, [filters, showInactivos])
 
   const fetchData = async () => {
     try {
       const params = new URLSearchParams()
       if (filters.categoria) params.append('categoria', filters.categoria)
       if (filters.proveedor_id) params.append('proveedor_id', filters.proveedor_id)
+      params.append('activo', showInactivos ? 'all' : 'true')
       
       const [prodRes, provRes, catRes] = await Promise.all([
         api.get(`/api/productos/?${params}`),
@@ -38,6 +40,32 @@ const Productos = () => {
       console.error('Error:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleToggleActivo = async (item) => {
+    try {
+      if (item.activo) {
+        if (!confirm('¿Desactivar este producto?')) return
+        await api.put(`/api/productos/${item.id}`, { activo: false })
+      } else {
+        if (!confirm('¿Activar este producto?')) return
+        await api.put(`/api/productos/${item.id}`, { activo: true })
+      }
+      fetchData()
+    } catch (error) {
+      setMessage({ type: 'error', text: error.response?.data?.error || 'Error' })
+    }
+  }
+
+  const handleEliminar = async (item) => {
+    if (!confirm(`¿ELIMINAR PERMANENTEMENTE el producto "${item.nombre}"? Esta acción no se puede deshacer.`)) return
+    try {
+      await api.delete(`/api/productos/${item.id}/eliminar`)
+      fetchData()
+      setMessage({ type: 'success', text: 'Producto eliminado permanentemente' })
+    } catch (error) {
+      setMessage({ type: 'error', text: error.response?.data?.error || 'Error al eliminar' })
     }
   }
 
@@ -102,8 +130,8 @@ const Productos = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Productos</h1>
-          <p className="text-gray-500">Gestión de productos e inventario</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Productos</h1>
+          <p className="text-gray-500 dark:text-gray-400">Gestión de productos e inventario</p>
         </div>
         <button onClick={() => { resetForm(); setShowModal(true) }} className="btn-primary flex items-center space-x-2">
           <Plus size={20} /><span>Nuevo Producto</span>
@@ -111,7 +139,7 @@ const Productos = () => {
       </div>
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
           {message.text}
         </div>
       )}
@@ -126,6 +154,14 @@ const Productos = () => {
             <option value="">Todos los proveedores</option>
             {proveedores.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
           </select>
+          <label className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+            <input
+              type="checkbox"
+              checked={showInactivos}
+              onChange={(e) => setShowInactivos(e.target.checked)}
+            />
+            <span>Mostrar inactivos</span>
+          </label>
         </div>
 
         {loading ? <div className="text-center py-8">Cargando...</div> : (
@@ -144,10 +180,10 @@ const Productos = () => {
               </thead>
               <tbody>
                 {productos.map((item) => (
-                  <tr key={item.id} className="border-b hover:bg-gray-50">
+                  <tr key={item.id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <td className="py-3 px-4">
                       <p className="font-medium">{item.nombre}</p>
-                      <p className="text-sm text-gray-500">{item.unidad_medida}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{item.unidad_medida}</p>
                     </td>
                     <td className="py-3 px-4"><span className="badge badge-info">{item.categoria}</span></td>
                     <td className="py-3 px-4">{item.proveedor_nombre}</td>
@@ -159,8 +195,21 @@ const Productos = () => {
                       </span>
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <button onClick={() => handleEdit(item)} className="p-2 text-gray-500 hover:text-primary-600"><Edit size={18} /></button>
-                      <button onClick={() => handleDelete(item.id)} className="p-2 text-gray-500 hover:text-red-600"><Trash2 size={18} /></button>
+                      <button onClick={() => handleEdit(item)} className="p-2 text-gray-500 hover:text-primary-600" title="Editar"><Edit size={18} /></button>
+                      <button
+                        onClick={() => handleToggleActivo(item)}
+                        className={`p-2 ${item.activo ? 'text-yellow-500 hover:text-yellow-600' : 'text-green-500 hover:text-green-600'}`}
+                        title={item.activo ? 'Desactivar' : 'Activar'}
+                      >
+                        <Power size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleEliminar(item)}
+                        className="p-2 text-gray-500 hover:text-red-600"
+                        title="Eliminar permanentemente"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -172,7 +221,7 @@ const Productos = () => {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-900 rounded-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">{editing ? 'Editar Producto' : 'Nuevo Producto'}</h2>
               <button onClick={() => setShowModal(false)}><X size={24} /></button>

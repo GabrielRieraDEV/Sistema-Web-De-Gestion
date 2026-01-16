@@ -172,3 +172,41 @@ def delete_proveedor(id):
     db.session.commit()
     
     return jsonify({'message': 'Proveedor desactivado exitosamente'}), 200
+
+
+@proveedores_bp.route('/<int:id>/activate', methods=['POST'])
+@jwt_required()
+@admin_required
+@swag_from({
+    'tags': ['Proveedores'],
+    'summary': 'Activar proveedor',
+    'security': [{'Bearer': []}],
+    'parameters': [{'name': 'id', 'in': 'path', 'type': 'integer', 'required': True}],
+    'responses': {200: {'description': 'Proveedor activado'}}
+})
+def activate_proveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    proveedor.activo = True
+    db.session.commit()
+    return jsonify({'message': 'Proveedor activado', 'proveedor': proveedor.to_dict()}), 200
+
+
+@proveedores_bp.route('/<int:id>/eliminar', methods=['DELETE'])
+@jwt_required()
+@admin_required
+@swag_from({
+    'tags': ['Proveedores'],
+    'summary': 'Eliminar proveedor permanentemente',
+    'security': [{'Bearer': []}],
+    'parameters': [{'name': 'id', 'in': 'path', 'type': 'integer', 'required': True}],
+    'responses': {200: {'description': 'Proveedor eliminado'}, 400: {'description': 'Error'}}
+})
+def eliminar_proveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    try:
+        db.session.delete(proveedor)
+        db.session.commit()
+        return jsonify({'message': 'Proveedor eliminado permanentemente'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'No se puede eliminar. Tiene productos asociados.'}), 400

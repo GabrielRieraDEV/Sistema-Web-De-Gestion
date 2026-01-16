@@ -61,35 +61,35 @@ const Comentarios = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Moderación de Comentarios</h1>
-        <p className="text-gray-500">Aprobar o rechazar comentarios de usuarios</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Moderación de Comentarios</h1>
+        <p className="text-gray-500 dark:text-gray-400">Aprobar o rechazar comentarios de usuarios</p>
       </div>
 
       {estadisticas && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="card text-center">
-            <p className="text-2xl font-bold text-gray-900">{estadisticas.total}</p>
-            <p className="text-sm text-gray-500">Total</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{estadisticas.total}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Total</p>
           </div>
           <div className="card text-center">
             <p className="text-2xl font-bold text-yellow-600">{estadisticas.pendientes}</p>
-            <p className="text-sm text-gray-500">Pendientes</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Pendientes</p>
           </div>
           <div className="card text-center">
             <p className="text-2xl font-bold text-green-600">{estadisticas.aprobados}</p>
-            <p className="text-sm text-gray-500">Aprobados</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Aprobados</p>
           </div>
           <div className="card text-center">
             <p className="text-2xl font-bold text-primary-600">
               {estadisticas.promedio_calificacion?.toFixed(1) || '-'}
             </p>
-            <p className="text-sm text-gray-500">Promedio</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Promedio</p>
           </div>
         </div>
       )}
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
           {message.text}
         </div>
       )}
@@ -101,7 +101,7 @@ const Comentarios = () => {
               key={estado}
               onClick={() => setFilter(estado)}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === estado ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                filter === estado ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               {estado === '' ? 'Todos' : estado.charAt(0).toUpperCase() + estado.slice(1)}
@@ -117,11 +117,11 @@ const Comentarios = () => {
         ) : (
           <div className="space-y-4">
             {comentarios.map((comentario) => (
-              <div key={comentario.id} className="border rounded-lg p-4">
+              <div key={comentario.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <p className="font-medium">{comentario.usuario_nombre}</p>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                       {comentario.calificacion && (
                         <div className="flex">{renderStars(comentario.calificacion)}</div>
                       )}
@@ -136,20 +136,20 @@ const Comentarios = () => {
                   </span>
                 </div>
                 
-                <p className="text-gray-700 mb-4">{comentario.contenido}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{comentario.contenido}</p>
                 
                 {comentario.estado === 'pendiente' && (
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleModerar(comentario.id, 'aprobar')}
-                      className="flex items-center space-x-1 px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200"
+                      className="flex items-center space-x-1 px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-200 dark:hover:bg-green-900"
                     >
                       <Check size={16} />
                       <span>Aprobar</span>
                     </button>
                     <button
                       onClick={() => handleModerar(comentario.id, 'rechazar')}
-                      className="flex items-center space-x-1 px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200"
+                      className="flex items-center space-x-1 px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-900"
                     >
                       <X size={16} />
                       <span>Rechazar</span>

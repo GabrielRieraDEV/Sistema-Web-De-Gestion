@@ -28,15 +28,15 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 py-12 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">CE</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">CECOALIMENTOS</h1>
-            <p className="text-gray-500 mt-2">Inicia sesión en tu cuenta</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">CECOALIMENTOS</h1>
+            <p className="text-gray-500 dark:text-gray-400 mt-2">Inicia sesión en tu cuenta</p>
           </div>
 
           {error && (

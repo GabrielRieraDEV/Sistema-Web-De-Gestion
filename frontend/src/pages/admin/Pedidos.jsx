@@ -174,7 +174,7 @@ const Pedidos = () => {
       {/* New Order Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-900 rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">Nuevo Pedido</h2>
               <button onClick={() => setShowModal(false)}><X size={24} /></button>
@@ -235,7 +235,7 @@ const Pedidos = () => {
       {/* Detail Modal */}
       {showDetail && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-lg w-full p-6">
+          <div className="bg-white dark:bg-gray-900 rounded-xl max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">Pedido #{showDetail.id}</h2>
               <button onClick={() => setShowDetail(null)}><X size={24} /></button>

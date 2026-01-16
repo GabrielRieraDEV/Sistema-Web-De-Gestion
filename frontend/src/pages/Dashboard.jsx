@@ -40,57 +40,57 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           ¡Hola, {user?.nombre}!
         </h1>
-        <p className="text-gray-500">Bienvenido al sistema de gestión CECOALIMENTOS</p>
+        <p className="text-gray-500 dark:text-gray-400">Bienvenido al sistema de gestión CECOALIMENTOS</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="card">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-primary-100 rounded-lg">
+            <div className="p-3 bg-primary-100 dark:bg-primary-900/50 rounded-lg">
               <ShoppingBag className="text-primary-600" size={24} />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Combos Disponibles</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.combos}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Combos Disponibles</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.combos}</p>
             </div>
           </div>
         </div>
 
         <div className="card">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-yellow-100 rounded-lg">
+            <div className="p-3 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg">
               <Clock className="text-yellow-600" size={24} />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Pendientes de Pago</p>
-              <p className="text-2xl font-bold text-gray-900">{pendientes}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Pendientes de Pago</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{pendientes}</p>
             </div>
           </div>
         </div>
 
         <div className="card">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-blue-100 rounded-lg">
+            <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
               <Package className="text-blue-600" size={24} />
             </div>
             <div>
-              <p className="text-sm text-gray-500">En Verificación</p>
-              <p className="text-2xl font-bold text-gray-900">{verificando}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">En Verificación</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{verificando}</p>
             </div>
           </div>
         </div>
 
         <div className="card">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-green-100 rounded-lg">
+            <div className="p-3 bg-green-100 dark:bg-green-900/50 rounded-lg">
               <CheckCircle className="text-green-600" size={24} />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Completadas</p>
-              <p className="text-2xl font-bold text-gray-900">{completadas}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Completadas</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{completadas}</p>
             </div>
           </div>
         </div>
@@ -98,11 +98,11 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Acciones Rápidas</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Acciones Rápidas</h2>
           <div className="space-y-3">
             <Link
               to="/combos"
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <div className="flex items-center space-x-3">
                 <ShoppingBag size={20} className="text-primary-600" />
@@ -112,7 +112,7 @@ const Dashboard = () => {
             </Link>
             <Link
               to="/mis-compras"
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <div className="flex items-center space-x-3">
                 <Package size={20} className="text-primary-600" />
@@ -125,10 +125,10 @@ const Dashboard = () => {
 
         {stats.compras.length > 0 && (
           <div className="card">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Últimas Compras</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Últimas Compras</h2>
             <div className="space-y-3">
               {stats.compras.slice(0, 3).map((compra) => (
-                <div key={compra.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={compra.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <div>
                     <p className="font-medium">Compra #{compra.id}</p>
                     <p className="text-sm text-gray-500">${compra.monto_total}</p>

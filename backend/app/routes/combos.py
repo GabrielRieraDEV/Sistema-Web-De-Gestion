@@ -88,8 +88,9 @@ def create_combo():
         if field not in data:
             return jsonify({'error': f'Campo {field} es requerido'}), 400
     
-    if data['tipo'] not in ['tipo_1', 'tipo_2', 'tipo_3']:
-        return jsonify({'error': 'Tipo debe ser tipo_1, tipo_2 o tipo_3'}), 400
+    tipos_validos = ['tipo_1', 'tipo_2', 'tipo_3', 'mixto', 'proteico', 'vegetariano']
+    if data['tipo'] not in tipos_validos:
+        return jsonify({'error': f'Tipo debe ser uno de: {", ".join(tipos_validos)}'}), 400
     
     if not data['productos'] or len(data['productos']) == 0:
         return jsonify({'error': 'El combo debe tener al menos un producto'}), 400
@@ -151,8 +152,9 @@ def update_combo(id):
     combo.activo = data.get('activo', combo.activo)
     
     if 'tipo' in data:
-        if data['tipo'] not in ['tipo_1', 'tipo_2', 'tipo_3']:
-            return jsonify({'error': 'Tipo debe ser tipo_1, tipo_2 o tipo_3'}), 400
+        tipos_validos = ['tipo_1', 'tipo_2', 'tipo_3', 'mixto', 'proteico', 'vegetariano']
+        if data['tipo'] not in tipos_validos:
+            return jsonify({'error': f'Tipo debe ser uno de: {", ".join(tipos_validos)}'}), 400
         combo.tipo = data['tipo']
     
     if 'productos' in data:
