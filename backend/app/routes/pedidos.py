@@ -94,7 +94,7 @@ def get_pedido(id):
 })
 def create_pedido():
     data = request.get_json()
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     
     if 'proveedor_id' not in data:
         return jsonify({'error': 'proveedor_id es requerido'}), 400

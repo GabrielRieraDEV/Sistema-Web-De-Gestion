@@ -9,7 +9,7 @@ def roles_required(*roles):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             current_user_id = get_jwt_identity()
-            usuario = Usuario.query.get(current_user_id)
+            usuario = Usuario.query.get(int(current_user_id))
             
             if not usuario:
                 return jsonify({'error': 'Usuario no encontrado'}), 404

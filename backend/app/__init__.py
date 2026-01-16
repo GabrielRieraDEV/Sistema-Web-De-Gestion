@@ -28,10 +28,9 @@ swagger_template = {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
-            "description": "JWT Token. Ejemplo: 'Bearer {token}'"
+            "description": "JWT Token. Ingresa: Bearer <tu_access_token> (incluye la palabra Bearer y un espacio antes del token)"
         }
     },
-    "security": [{"Bearer": []}],
     "tags": [
         {"name": "Auth", "description": "Autenticación y registro"},
         {"name": "Usuarios", "description": "Gestión de usuarios (Admin)"},
