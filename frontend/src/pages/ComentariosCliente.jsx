@@ -77,18 +77,18 @@ const ComentariosCliente = () => {
     <div className="space-y-6">
       <div className="flex flex-col lg:flex-row lg:items-start gap-6">
         <div className="card lg:w-1/2">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Déjanos tu comentario</h2>
-          <p className="text-sm text-gray-500 mb-6">Comparte tu experiencia para ayudarnos a mejorar.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Déjanos tu comentario</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Comparte tu experiencia para ayudarnos a mejorar.</p>
 
           {message.text && (
-            <div className={`px-4 py-3 rounded-lg mb-4 ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>
+            <div className={`px-4 py-3 rounded-lg mb-4 ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300'}`}>
               {message.text}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Categoría</label>
               <select
                 value={formData.categoria}
                 onChange={(e) => setFormData({ ...formData, categoria: e.target.value })}
@@ -101,12 +101,12 @@ const ComentariosCliente = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Calificación</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Calificación</label>
               {renderStars(formData.calificacion)}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Comentario</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Comentario</label>
               <textarea
                 value={formData.contenido}
                 onChange={(e) => setFormData({ ...formData, contenido: e.target.value })}
@@ -125,17 +125,17 @@ const ComentariosCliente = () => {
         </div>
 
         <div className="card flex-1">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Mis comentarios</h2>
-          <p className="text-sm text-gray-500 mb-4">Puedes ver el estado de aprobación de tus comentarios enviados.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mis comentarios</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Puedes ver el estado de aprobación de tus comentarios enviados.</p>
 
           {myComments.length === 0 ? (
-            <p className="text-gray-500">Aún no has enviado comentarios.</p>
+            <p className="text-gray-500 dark:text-gray-400">Aún no has enviado comentarios.</p>
           ) : (
             <div className="space-y-3 max-h-[420px] overflow-y-auto pr-2">
               {myComments.map((comentario) => (
-                <div key={comentario.id} className="border border-gray-100 rounded-lg p-3 bg-gray-50">
+                <div key={comentario.id} className="border border-gray-100 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-800">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-gray-500 capitalize">{comentario.categoria}</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400 capitalize">{comentario.categoria}</span>
                     <span className={`badge ${
                       comentario.estado === 'aprobado' ? 'badge-success' :
                       comentario.estado === 'rechazado' ? 'badge-danger' :
@@ -155,8 +155,8 @@ const ComentariosCliente = () => {
                       ))}
                     </div>
                   )}
-                  <p className="text-sm text-gray-700">{comentario.contenido}</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{comentario.contenido}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {new Date(comentario.fecha_creacion).toLocaleDateString('es-VE')}
                   </p>
                 </div>
@@ -169,14 +169,14 @@ const ComentariosCliente = () => {
       <div className="card">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">Testimonios aprobados</h2>
-            <p className="text-sm text-gray-500">Conoce lo que dicen otros beneficiarios.</p>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Testimonios aprobados</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Conoce lo que dicen otros beneficiarios.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setFilter('')}
               className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                filter === '' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600'
+                filter === '' ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
               }`}
             >
               Todos
@@ -186,7 +186,7 @@ const ComentariosCliente = () => {
                 key={cat.value}
                 onClick={() => setFilter(cat.value)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium capitalize ${
-                  filter === cat.value ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600'
+                  filter === cat.value ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
                 }`}
               >
                 {cat.label}
@@ -196,21 +196,21 @@ const ComentariosCliente = () => {
         </div>
 
         {loading ? (
-          <div className="text-center py-12">Cargando comentarios...</div>
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">Cargando comentarios...</div>
         ) : publicComments.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">No hay comentarios en esta categoría.</div>
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">No hay comentarios en esta categoría.</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {publicComments.map((comentario) => (
-              <div key={comentario.id} className="border border-gray-100 rounded-xl p-4">
+              <div key={comentario.id} className="border border-gray-100 dark:border-gray-700 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <p className="font-semibold text-gray-900">{comentario.usuario_nombre || 'Usuario'}</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="font-semibold text-gray-900 dark:text-white">{comentario.usuario_nombre || 'Usuario'}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
                       {new Date(comentario.fecha_creacion).toLocaleDateString('es-VE')}
                     </p>
                   </div>
-                  <span className="text-xs font-medium uppercase text-gray-400">{comentario.categoria}</span>
+                  <span className="text-xs font-medium uppercase text-gray-400 dark:text-gray-500">{comentario.categoria}</span>
                 </div>
                 {comentario.calificacion && (
                   <div className="flex mb-3">
@@ -223,7 +223,7 @@ const ComentariosCliente = () => {
                     ))}
                   </div>
                 )}
-                <p className="text-gray-600 text-sm">{comentario.contenido}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">{comentario.contenido}</p>
               </div>
             ))}
           </div>

@@ -44,12 +44,12 @@ const Pagos = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Verificación de Pagos</h1>
-        <p className="text-gray-500">Aprobar o rechazar pagos pendientes</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Verificación de Pagos</h1>
+        <p className="text-gray-500 dark:text-gray-400">Aprobar o rechazar pagos pendientes</p>
       </div>
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+        <div className={`px-4 py-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
           {message.text}
         </div>
       )}
@@ -58,7 +58,7 @@ const Pagos = () => {
         {loading ? <div className="text-center py-8">Cargando...</div> : pagos.length === 0 ? (
           <div className="text-center py-12">
             <CreditCard size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No hay pagos pendientes de verificación</p>
+            <p className="text-gray-500 dark:text-gray-400">No hay pagos pendientes de verificación</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -76,7 +76,7 @@ const Pagos = () => {
               </thead>
               <tbody>
                 {pagos.map((pago) => (
-                  <tr key={pago.id} className="border-b hover:bg-gray-50">
+                  <tr key={pago.id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <td className="py-3 px-4 font-medium">#{pago.id}</td>
                     <td className="py-3 px-4">Compra #{pago.compra_id}</td>
                     <td className="py-3 px-4">
@@ -84,17 +84,17 @@ const Pagos = () => {
                     </td>
                     <td className="py-3 px-4 font-mono text-sm">{pago.numero_referencia}</td>
                     <td className="py-3 px-4 text-right font-bold">${parseFloat(pago.monto).toFixed(2)}</td>
-                    <td className="py-3 px-4 text-gray-600">
+                    <td className="py-3 px-4 text-gray-600 dark:text-gray-300">
                       {new Date(pago.fecha_pago).toLocaleDateString('es-VE')}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <button onClick={() => setSelectedPago(pago)} className="p-2 text-gray-500 hover:text-primary-600">
+                      <button onClick={() => setSelectedPago(pago)} className="p-2 text-gray-500 dark:text-gray-300 hover:text-primary-600" title="Ver detalle">
                         <Eye size={18} />
                       </button>
-                      <button onClick={() => handleVerify(pago.id, 'aprobar')} className="p-2 text-gray-500 hover:text-green-600">
+                      <button onClick={() => handleVerify(pago.id, 'aprobar')} className="p-2 text-gray-500 dark:text-gray-300 hover:text-green-600" title="Aprobar">
                         <Check size={18} />
                       </button>
-                      <button onClick={() => handleVerify(pago.id, 'rechazar')} className="p-2 text-gray-500 hover:text-red-600">
+                      <button onClick={() => handleVerify(pago.id, 'rechazar')} className="p-2 text-gray-500 dark:text-gray-300 hover:text-red-600" title="Rechazar">
                         <X size={18} />
                       </button>
                     </td>
@@ -111,39 +111,39 @@ const Pagos = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-900 rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">Detalles del Pago #{selectedPago.id}</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Detalles del Pago #{selectedPago.id}</h2>
               <button onClick={() => setSelectedPago(null)}><X size={24} /></button>
             </div>
             
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500">Compra:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Compra:</span>
                   <p className="font-medium">#{selectedPago.compra_id}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Monto:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Monto:</span>
                   <p className="font-bold text-lg">${parseFloat(selectedPago.monto).toFixed(2)}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Método:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Método:</span>
                   <p className="capitalize">{selectedPago.metodo_pago?.replace('_', ' ')}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Referencia:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Referencia:</span>
                   <p className="font-mono">{selectedPago.numero_referencia}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Banco Origen:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Banco Origen:</span>
                   <p>{selectedPago.banco_origen || '-'}</p>
                 </div>
                 <div>
-                  <span className="text-gray-500">Teléfono:</span>
+                  <span className="text-gray-500 dark:text-gray-400">Teléfono:</span>
                   <p>{selectedPago.telefono_pago || '-'}</p>
                 </div>
               </div>
 
-              <div className="flex space-x-3 pt-4 border-t">
+              <div className="flex space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={() => handleVerify(selectedPago.id, 'aprobar')}
                   className="btn-primary flex-1 flex items-center justify-center space-x-2"

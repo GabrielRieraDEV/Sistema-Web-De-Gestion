@@ -34,15 +34,15 @@ const Reportes = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="card">
-          <p className="text-sm text-gray-500">Total Recaudado</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Recaudado</p>
           <p className="text-3xl font-bold text-primary-600">${data?.recaudacion?.total?.toFixed(2) || '0.00'}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Compras Completadas</p>
-          <p className="text-3xl font-bold text-gray-900">{data?.recaudacion?.cantidad || 0}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Compras Completadas</p>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">{data?.recaudacion?.cantidad || 0}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Productos Bajo Stock</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Productos Bajo Stock</p>
           <p className="text-3xl font-bold text-red-600">{data?.inventario?.productos_bajo_stock || 0}</p>
         </div>
       </div>
@@ -70,19 +70,19 @@ const Reportes = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="card">
-          <p className="text-sm text-gray-500">Total Productos</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Productos</p>
           <p className="text-2xl font-bold">{data?.resumen?.total_productos || 0}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Bajo Stock</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Bajo Stock</p>
           <p className="text-2xl font-bold text-yellow-600">{data?.resumen?.bajo_stock || 0}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Sin Stock</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Sin Stock</p>
           <p className="text-2xl font-bold text-red-600">{data?.resumen?.sin_stock || 0}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Valor Total</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Valor Total</p>
           <p className="text-2xl font-bold text-primary-600">${data?.resumen?.valor_total?.toFixed(2) || '0.00'}</p>
         </div>
       </div>
@@ -93,10 +93,10 @@ const Reportes = () => {
           <table className="w-full">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-2 px-4 font-medium text-gray-500">Producto</th>
-                <th className="text-right py-2 px-4 font-medium text-gray-500">Cantidad</th>
-                <th className="text-right py-2 px-4 font-medium text-gray-500">Mínimo</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-500">Estado</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Producto</th>
+                <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Cantidad</th>
+                <th className="text-right py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Mínimo</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-500 dark:text-gray-400">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -127,11 +127,11 @@ const Reportes = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="card">
-          <p className="text-sm text-gray-500">Total Ventas</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Ventas</p>
           <p className="text-3xl font-bold">{data?.totales?.cantidad || 0}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Monto Total</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Monto Total</p>
           <p className="text-3xl font-bold text-primary-600">${data?.totales?.monto?.toFixed(2) || '0.00'}</p>
         </div>
       </div>
@@ -158,8 +158,8 @@ const Reportes = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Reportes</h1>
-        <p className="text-gray-500">Análisis y estadísticas del sistema</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Reportes</h1>
+        <p className="text-gray-500 dark:text-gray-400">Análisis y estadísticas del sistema</p>
       </div>
 
       <div className="flex space-x-2">
@@ -170,7 +170,7 @@ const Reportes = () => {
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors ${
               activeTab === tab.id
                 ? 'bg-primary-600 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
             <tab.icon size={18} />
